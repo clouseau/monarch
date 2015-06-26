@@ -9,6 +9,12 @@
 			margin: 0 auto;
 		}
 
+		.row-centered {
+			margin: auto;
+			position: absolute;
+			top: 0; right: 0; bottom: 0; left: 0;
+		}
+
 		.answered-right .thumbnail,
 		.answered-right a.thumbnail.active, .answered-right a.thumbnail:focus {
 			border-color: #5cb85c;
@@ -27,48 +33,102 @@
 		<script type="text/javascript">
 		angular.module('app',[])
 
-		.directive('questionnaire',[function() {
+		.constant('QUESTIONS', [{
+			text: "Question 1 yeah?",
+			options: [{
+				type: "Butterfly",
+				answer: true
+			}, {
+				type: "Fly",
+				answer: false
+			}, {
+				type: "Butterfly",
+				answer: false
+			}, {
+				type: "Rabbit",
+				answer: false
+			}]
+		}, {
+			text: "Question 2 yeah?",
+			options: [{
+				type: "Butterfly",
+				answer: false
+			}, {
+				type: "Fly",
+				answer: false
+			}, {
+				type: "Butterfly",
+				answer: true
+			}, {
+				type: "Rabbit",
+				answer: false
+			}]
+		}])
+
+		.constant('APP_STATES', {
+			START: 0,
+			QUESTIONS: 1,
+			END: 2
+		})
+
+		.directive('questionnaire',['$timeout', 'QUESTIONS', 'APP_STATES', function($timeout, QUESTIONS, APP_STATES) {
 			return {
 				link: function(scope, element, attrs) {
-					scope.app = {
-						state: 1
-					};
 
-					scope.questions = [{
-						text: "Question 1 yeah?",
-						options: [{
-							type: "Butterfly",
-							answer: true
-						}, {
-							type: "Fly",
-							answer: false
-						}, {
-							type: "Butterfly",
-							answer: false
-						}, {
-							type: "Rabbit",
-							answer: false
-						}]
-					}];
+					function init() {
+						scope.app = {
+							state: APP_STATES.START,
+							questionnaire: {
+								next: false,
+								finish: false
+							}
+						};
 
-					scope.currentQuestion = 0;
+						// We want to use a copy, not the original.
+						// That way we can start new questionnaires
+						// over and over again using the original data.
+						scope.questions = angular.copy(QUESTIONS);
+
+						// Index for the current question
+						scope.currentQuestion = 0;
+					}
 
 					scope.nextState = function(state) {
 						scope.app.state = state;
 					};
 
 					scope.nextQuestion = function() {
-
+						scope.currentQuestion++;
+						scope.app.questionnaire.next = false;
 					};
 
 					scope.answer = function(i) {
+						scope.questions[scope.currentQuestion].options[i].answered = true;
 						if(scope.questions[scope.currentQuestion].options[i].answer) {
 							// Correct!
+							// Move to next question
+							if(scope.currentQuestion + 1 in scope.questions) {
+								// There is a next question
+								// Show 'Next' button
+								scope.app.questionnaire.next = true;
+							} else {
+								// This is the last question
+								scope.app.questionnaire.finish = true;
+							}
 						} else {
 							// Not correct!
 						}
-						scope.questions[scope.currentQuestion].options[i].answered = true;
 					};
+
+					scope.finish = function() {
+						scope.app.state = APP_STATES.END;
+					};
+
+					scope.restart = function() {
+						init();
+					};
+
+					init();
 				}
 			};
 		}]);
@@ -78,15 +138,22 @@
 		<div ng-switch on="app.state" class="container">
 			<div ng-switch-when="0">
 				<div class="row">
-					<div class="col-xs-10 col-xs-8 col-md-4 col-centered text-center">
+					<div class="col-xs-10 col-xs-8 col-md-4 col-centered row-centered text-center" style="height: 300px;">
 						<h1>[ Working Title ]</h1>
 						<button type="button" class="btn btn-success btn-lg" ng-click="nextState(1)">Start</button> 
 					</div>
 				</div>
 			</div>
-			<div ng-switch-when="1">
+			<div ng-switch-when="1" ng-cloak>
 				<div class="row">
-					<div class="col-xs-12 col-xs-12 col-md-10 col-centered text-center">
+					<div class="col-xs-12 col-xs-12 col-md-10 col-centered row-centered text-center" style="height: 500px;">
+						<div class="col-xs-12 col-sm-8 col-md-6 col-centered">
+							<div class="progress row">
+							  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ currentQuestion / questions.length }}" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': (currentQuestion / questions.length * 100) + '%'}">
+							    <span class="sr-only">20% Complete</span>
+							  </div>
+							</div>
+						</div>
 						<div class="panel panel-default">
 							<div class="panel-body">
 								<div class="question">
@@ -99,12 +166,35 @@
 										</div>
 									</div>
 								</div>
+								<div class="controls clearfix">
+									<ul class="list-inline list-unstyled pull-right">
+										<li><button type="button" class="btn btn-primary btn-lg" ng-if="app.questionnaire.next" ng-click="nextQuestion()">Next Question</button></li>
+										<li><button type="button" class="btn btn-primary btn-lg" ng-if="app.questionnaire.finish" ng-click="finish()">Finish</button></li>
+									</ul>
+								</div>
 							</div>
 						</div>
-						<button type="button" class="btn btn-link btn-lg col-centered" ng-click="nextState(0)">Start Over</button>
+						<button type="button" class="btn btn-link btn-lg col-centered" ng-click="restart()">Start Over</button>
+					</div>
+				</div>
+			</div>
+			<div ng-switch-when="2" ng-cloak>
+				<div class="row">
+					<div class="col-xs-10 col-xs-8 col-md-4 col-centered row-centered text-center" style="height: 300px;">
+						<h1>Congratulations!</h1>
+						<h2>You're a winner!</h2>
+						<button type="button" class="btn btn-success btn-lg" ng-click="restart()">Restart</button> 
 					</div>
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript" src="libs/fastclick-1.0.6/fastclick.js"></script>
+		<script type="text/javascript">
+		if ('addEventListener' in document) {
+	    document.addEventListener('DOMContentLoaded', function() {
+        FastClick.attach(document.body);
+	    }, false);
+		}
+		</script>
 	</body>
 </html>
