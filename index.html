@@ -34,36 +34,38 @@
 		angular.module('app',[])
 
 		.constant('QUESTIONS', [{
-			text: "Question 1 yeah?",
-			options: [{
-				type: "Butterfly",
-				answer: true
+				text: "Question 1 yeah?",
+				options: [{
+					type: "Butterfly",
+					answer: true,
+					url: "images/what.png"
+				}, {
+					type: "Fly",
+					answer: false
+				}, {
+					type: "Butterfly",
+					answer: false
+				}, {
+					type: "Rabbit",
+					answer: false
+				}]
 			}, {
-				type: "Fly",
-				answer: false
-			}, {
-				type: "Butterfly",
-				answer: false
-			}, {
-				type: "Rabbit",
-				answer: false
-			}]
-		}, {
-			text: "Question 2 yeah?",
-			options: [{
-				type: "Butterfly",
-				answer: false
-			}, {
-				type: "Fly",
-				answer: false
-			}, {
-				type: "Butterfly",
-				answer: true
-			}, {
-				type: "Rabbit",
-				answer: false
-			}]
-		}])
+				text: "Question 2 yeah?",
+				options: [{
+					type: "Butterfly",
+					answer: false
+				}, {
+					type: "Fly",
+					answer: false
+				}, {
+					type: "Butterfly",
+					answer: true
+				}, {
+					type: "Rabbit",
+					answer: false
+				}]
+			}
+		])
 
 		.constant('APP_STATES', {
 			START: 0,
@@ -161,7 +163,7 @@
 									<div class="row">
 										<div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="opt in questions[currentQuestion].options" ng-class="{'answered-right':opt.answered && opt.answer, 'answered-wrong':opt.answered && !opt.answer}">
 											<a href class="thumbnail" ng-click="answer($index)">
-												<img src="" alt width="171px" height="180px">
+												<img src="{{ opt.url }}" alt width="171px" height="180px">
 											</a>
 										</div>
 									</div>
