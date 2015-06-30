@@ -15,14 +15,20 @@
 			top: 0; right: 0; bottom: 0; left: 0;
 		}
 
+		a.thumbnail {
+			transition: border-width 0.05s ease;
+		}
+
 		.answered-right .thumbnail,
 		.answered-right a.thumbnail.active, .answered-right a.thumbnail:focus {
 			border-color: #5cb85c;
+			border-width: 3px;
 		}
 
 		.answered-wrong .thumbnail,
 		.answered-wrong a.thumbnail.active, .answered-wrong a.thumbnail:focus {
 			border-color: #d9534f;
+			border-width: 3px;
 		}
 
 		* {
@@ -33,7 +39,8 @@
 	    user-select:none;
 		}
 
-		a:hover, a:active, a:focus {
+		a:hover, a:active, a:focus,
+		button:hover, button:active, button:focus {
 		  outline: 0;
 		}
 		</style>
