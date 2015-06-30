@@ -32,13 +32,17 @@
 	    -ms-user-select:none;
 	    user-select:none;
 		}
+
+		a:hover, a:active, a:focus {
+		  outline: 0;
+		}
 		</style>
 		<script type="text/javascript" src="libs/angular-1.3.16/angular.min.js"></script>
 		<script type="text/javascript">
 		angular.module('app',[])
 
 		.constant('QUESTIONS', [{
-				text: "Question 1 yeah?",
+				text: "Which is the monarch butterfly?",
 				options: [{
 					type: "Butterfly",
 					answer: true,
@@ -54,7 +58,52 @@
 					answer: false
 				}]
 			}, {
-				text: "Question 2 yeah?",
+				text: "On which plant does the monarch butterfly lay her eggs?",
+				options: [{
+					type: "Butterfly",
+					answer: false
+				}, {
+					type: "Fly",
+					answer: false
+				}, {
+					type: "Butterfly",
+					answer: true
+				}, {
+					type: "Rabbit",
+					answer: false
+				}]
+			}, {
+				text: "Which is the monarch butterfly caterpillar?",
+				options: [{
+					type: "Butterfly",
+					answer: false
+				}, {
+					type: "Fly",
+					answer: false
+				}, {
+					type: "Butterfly",
+					answer: true
+				}, {
+					type: "Rabbit",
+					answer: false
+				}]
+			}, {
+				text: "In which does the monarch caterpillar change to the butterfly?",
+				options: [{
+					type: "Butterfly",
+					answer: false
+				}, {
+					type: "Fly",
+					answer: false
+				}, {
+					type: "Butterfly",
+					answer: true
+				}, {
+					type: "Rabbit",
+					answer: false
+				}]
+			}, {
+				text: "How has the numbar of monarchs changed in the past 20 years?",
 				options: [{
 					type: "Butterfly",
 					answer: false
@@ -145,7 +194,8 @@
 			<div ng-switch-when="0">
 				<div class="row">
 					<div class="col-xs-10 col-xs-8 col-md-4 col-centered row-centered text-center" style="height: 300px;">
-						<h1>[ Working Title ]</h1>
+						<h1>Monarch Quiz</h1>
+						<h4>How well do you know the monarch butterfly?</h4>
 						<button type="button" class="btn btn-success btn-lg" ng-click="nextState(1)">Start</button> 
 					</div>
 				</div>
@@ -166,7 +216,7 @@
 									<h1>{{ questions[currentQuestion].text }}</h1>
 									<div class="row">
 										<div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="opt in questions[currentQuestion].options" ng-class="{'answered-right':opt.answered && opt.answer, 'answered-wrong':opt.answered && !opt.answer}">
-											<a href class="thumbnail" ng-click="answer($index)" draggable="false">
+											<a href class="thumbnail" ng-click="answer($index)" draggable="false" style="min-height:100px">
 												<img src="{{ opt.url }}" alt width="171px" height="180px" draggable="false">
 											</a>
 										</div>
