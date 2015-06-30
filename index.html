@@ -166,8 +166,8 @@
 									<h1>{{ questions[currentQuestion].text }}</h1>
 									<div class="row">
 										<div class="col-xs-12 col-sm-4 col-md-3" ng-repeat="opt in questions[currentQuestion].options" ng-class="{'answered-right':opt.answered && opt.answer, 'answered-wrong':opt.answered && !opt.answer}">
-											<a href class="thumbnail" ng-click="answer($index)">
-												<img src="{{ opt.url }}" alt width="171px" height="180px">
+											<a href class="thumbnail" ng-click="answer($index)" draggable="false">
+												<img src="{{ opt.url }}" alt width="171px" height="180px" draggable="false">
 											</a>
 										</div>
 									</div>
