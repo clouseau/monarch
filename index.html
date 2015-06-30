@@ -161,7 +161,6 @@
 		.directive('questionnaire',['$timeout', 'QUESTIONS', 'APP_STATES', function($timeout, QUESTIONS, APP_STATES) {
 			return {
 				link: function(scope, element, attrs) {
-					console.log(scope);
 					function init() {
 						scope.app = {
 							state: APP_STATES.START,
@@ -224,7 +223,6 @@
 			return {
 				link: function() {
 					$timeout(function() {
-						console.log(QUESTIONS);
 						QUESTIONS.forEach(function(e) {
 							e.options.forEach(function(o) {
 								new Image().src = o.url;
