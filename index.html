@@ -56,73 +56,92 @@
 					url: "images/what.png"
 				}, {
 					type: "Fly",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}, {
 					type: "Butterfly",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}, {
 					type: "Rabbit",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}]
 			}, {
 				text: "On which plant does the monarch butterfly lay her eggs?",
 				options: [{
 					type: "Butterfly",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}, {
 					type: "Fly",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}, {
 					type: "Butterfly",
-					answer: true
+					answer: true,
+					url: "images/what.png"
 				}, {
 					type: "Rabbit",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}]
 			}, {
 				text: "Which is the monarch butterfly caterpillar?",
 				options: [{
 					type: "Butterfly",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}, {
 					type: "Fly",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}, {
 					type: "Butterfly",
-					answer: true
+					answer: true,
+					url: "images/what.png"
 				}, {
 					type: "Rabbit",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}]
 			}, {
 				text: "In which does the monarch caterpillar change to the butterfly?",
 				options: [{
 					type: "Butterfly",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}, {
 					type: "Fly",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}, {
 					type: "Butterfly",
-					answer: true
+					answer: true,
+					url: "images/what.png"
 				}, {
 					type: "Rabbit",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}]
 			}, {
 				text: "How has the numbar of monarchs changed in the past 20 years?",
 				options: [{
 					type: "Butterfly",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}, {
 					type: "Fly",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}, {
 					type: "Butterfly",
-					answer: true
+					answer: true,
+					url: "images/what.png"
 				}, {
 					type: "Rabbit",
-					answer: false
+					answer: false,
+					url: "images/what.png"
 				}]
 			}
 		])
@@ -193,10 +212,25 @@
 					init();
 				}
 			};
+		}])
+
+		.directive('preLoad', ['$timeout', 'QUESTIONS', function($timeout, QUESTIONS) {
+			return {
+				link: function() {
+					$timeout(function() {
+						console.log(QUESTIONS);
+						QUESTIONS.forEach(function(e) {
+							e.options.forEach(function(o) {
+								new Image().src = o.url;
+							});
+						});
+					}, 0);
+				}
+			};
 		}]);
 		</script>
 	</head>
-	<body ng-app="app" questionnaire>
+	<body ng-app="app" questionnaire pre-load>
 		<div ng-switch on="app.state" class="container">
 			<div ng-switch-when="0">
 				<div class="row">
