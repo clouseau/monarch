@@ -49,6 +49,10 @@
 			padding: 16px 22px;
 			font-size: 26px;
 		}
+
+		.quiz {
+			margin-top: 40px;
+		}
 		</style>
 		<script type="text/javascript" src="libs/angular-1.3.16/angular.min.js"></script>
 		<script type="text/javascript">
@@ -245,9 +249,9 @@
 					</div>
 				</div>
 			</div>
-			<div ng-switch-when="1" ng-cloak>
+			<div ng-switch-when="1" ng-cloak class="quiz">
 				<div class="row">
-					<div class="col-xs-12 col-xs-12 col-md-10 col-centered row-centered text-center" style="height: 500px;">
+					<div class="col-xs-12 col-xs-12 col-md-10 col-centered text-center" style="height: 500px;">
 						<div class="col-xs-12 col-sm-8 col-md-6 col-centered">
 							<div class="progress row">
 							  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ currentQuestion / questions.length }}" aria-valuemin="0" aria-valuemax="100" ng-style="{'width': (currentQuestion / questions.length * 100) + '%'}">
