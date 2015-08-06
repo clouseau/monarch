@@ -265,6 +265,47 @@
 	    background-color: #b61725;
     	border-color: #b61725;
 		}
+
+		.text-gold {
+			color: #dfbd00;
+		}
+
+		.end {
+			color: #fff;
+		}
+
+		.end h1 {
+			font-size: 100px;
+			font-weight: bold;
+			margin-top: 50px;
+			position: relative;
+		}
+
+		.end h1 img {
+	    height: 250px;
+		  position: absolute;
+		  left: calc(50% - 595px);
+		  top: -78px;
+		}
+
+		.end h2 {
+			font-size: 50px;
+			font-weight: bold;
+			margin-bottom: 100px;
+		}
+
+		.end h4 {
+			margin-top: 100px;
+			margin-bottom: 30px;
+			font-size: 30px;
+			font-weight: bold;
+		}
+
+		.end footer {
+			position: fixed;
+	    bottom: 20px;
+	    left: 20px;
+		}
 		</style>
 		<script type="text/javascript" src="libs/angular-1.3.16/angular.min.js"></script>
 		<script type="text/javascript">
@@ -398,7 +439,8 @@
 				link: function(scope, element, attrs) {
 					function init() {
 						scope.app = {
-							state: APP_STATES.START,
+							// state: APP_STATES.START,
+							state: APP_STATES.END,
 							questionnaire: {
 								next: false,
 								finish: false
@@ -537,13 +579,23 @@
 				</footer>
 			</div>
 			<!-- End page -->
-			<div ng-switch-when="2" ng-cloak class="container-fluid">
+			<div ng-switch-when="2" ng-cloak class="end container-fluid">
 				<div class="row">
-					<div class="col-xs-10 col-xs-8 col-md-4 col-centered row-centered text-center" style="height: 300px;">
-						<h1>Congratulations!</h1>
-						<h2>You're a winner!</h2>
-						<button type="button" class="btn btn-success btn-xl" ng-mousedown="restart()">Restart</button> 
+					<div class="col-xs-12 col-centered row-centered text-center" style="height: 700px">
+						<h1><img src="images/Butterfly1.gif" height="50px">Congratulations</h1>
+						<h2>Thank you for taking the <span class="text-gold">Monarch Quiz</span></h2>
+						<div class="gold-line"><hr></div>
+						<h4>Sponsored By:</h4>
+						<img src="images/ISUEO_aeg.png" width="500px">
 					</div>
+					<footer>
+						<div class="controls pull-left">
+							<button type="button" class="btn btn-link btn-xl col-centered btn-start-over" ng-mousedown="restart()">
+								<img src="images/correctanswer_butterfly.png" class="btn-start-over-img">
+								<span class="btn-start-over-text">Start Over</span>
+							</button>
+						</div>
+					</footer>
 				</div>
 			</div>
 		</div>
